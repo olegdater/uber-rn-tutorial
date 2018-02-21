@@ -11,7 +11,7 @@ import {
 } from '../components'
 
 const mapStateToProps = (state) => ({
-  recentLocations: state.recentLocations,
+  recentLocations: state.main.recentLocations,
   shortcutLocations: state.recentLocations.slice(0, 3),
 })
 
