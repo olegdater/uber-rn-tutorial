@@ -7,9 +7,9 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
+  Image,
 } from 'react-native'
 import * as Animatable from 'react-native-animatable'
-
 export default class LocationSearchHeader extends Component {
   firstState = false;
 
@@ -31,15 +31,25 @@ export default class LocationSearchHeader extends Component {
     return (<TouchableOpacity style={styles.searchBarSecond}>
       <View style={styles.header}>
       </View>
-      <View style={styles.searchFrom}>
-        <View style={styles.circle}></View>
-        <TextInput placeholder='Work' style={styles.textInputFrom}>
-        </TextInput>
+      <View style={styles.navHeader}>
+        <Image source={require('../images/icon-arrow-left.png')} style={styles.backButton}/>
       </View>
-      <View style={styles.searchTo}>
-        <View style={styles.square2}></View>
-        <TextInput placeholder={placeholder} style={styles.textInputTo} onFocus={this.onFocus}>
-        </TextInput>
+      <View style={styles.searchControl}>
+        <View style={styles.searchControldecoration}>
+          <View style={styles.circle}></View>
+          <View style={styles.line}></View>
+          <View style={styles.square2}></View>
+        </View>
+        <View style={styles.searchControlInputs}>
+          <View style={styles.searchFrom}>
+            <TextInput placeholder='Work' style={styles.textInputFrom}>
+            </TextInput>
+          </View>
+          <View style={styles.searchTo}>
+            <TextInput placeholder={placeholder} style={styles.textInputTo} onFocus={this.onFocus}>
+            </TextInput>
+          </View>
+        </View>
       </View>
     </TouchableOpacity>);
     }
@@ -64,6 +74,20 @@ export default class LocationSearchHeader extends Component {
 }
 
 const styles = StyleSheet.create({
+  searchControl: {
+    flex: 2,
+    flexDirection: 'row',
+  },
+  searchControldecoration: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    alignSelf: 'auto',
+    justifyContent: 'center',
+  },
+  searchControlInputs: {
+    flex: 1,
+    marginLeft: 10,
+  },
   searchBarFirst: {
     position: 'absolute',
     height: 50,
@@ -102,7 +126,15 @@ const styles = StyleSheet.create({
     marginRight: 30,
   },
   header: {
-    flex: 1,
+    flex: 0.5,
+  },
+  navHeader: {
+    flex: 0.3,
+  },
+  backButton: {
+    opacity: 0.3,
+    width: 25,
+    height: 25,
   },
   textInput: {
     flex: 1,
@@ -125,7 +157,7 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     backgroundColor: 'black',
-    margin: 10,
+    margin: 5,
   },
   square: {
     flex: 0,
@@ -135,6 +167,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     margin: 10,
   },
+  line: {
+    flex: 0,
+    alignSelf: 'center',
+    width: 2,
+    height: 50,
+    backgroundColor: 'gray',
+    margin: 0,
+  },
   circle: {
     flex: 0,
     alignSelf: 'center',
@@ -142,6 +182,6 @@ const styles = StyleSheet.create({
     height: 10,
     backgroundColor: 'gray',
     borderRadius: 5,
-    margin: 10,
+    margin: 5,
   }
 })
