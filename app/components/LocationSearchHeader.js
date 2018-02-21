@@ -21,7 +21,7 @@ export default class LocationSearchHeader extends Component {
     this.firstState = true;
   }
 
-  onFocus = () => {
+  onFocus = async () => {
     console.log('Component touched');
     
     this.firstState = false;
@@ -34,7 +34,9 @@ export default class LocationSearchHeader extends Component {
       right: 0,
     }, this.transitionDuration)
     this.searchtwoRef.transitionTo({ opacity: 1, zIndex: 2, }, this.transitionDuration)
-    this.refs.secondWhereInput.focus(); 
+    setTimeout(() => {
+      this.refs.secondWhereInput.focus();
+    }, this.transitionDuration);
     this.setState({
       firstState: false,
     })
@@ -58,7 +60,6 @@ export default class LocationSearchHeader extends Component {
   }
 
   render() {
-    // return this.firstState ? this.renderFirstState() : this.renderSecondState();
     const { placeholder } = this.props;
     return (
       <View>
@@ -96,44 +97,6 @@ export default class LocationSearchHeader extends Component {
         </Animatable.View>
       </View>  
     );
-  }
-  
-  renderFirstState = () => {
-    const { placeholder } = this.props;
-    return (<Animatable.View style={styles.searchBarFirst} transition="opacity">
-      <View style={styles.square}></View>
-      <TextInput placeholder={placeholder} style={styles.textInput} onFocus={this.onFocus}>
-      </TextInput>
-    </Animatable.View>);
-  }
-
-  renderSecondState = () => {
-    const { placeholder } = this.props;
-    return (
-      <Animatable.View style={styles.searchBarSecond} transition="opacity">
-      <View style={styles.header}>
-      </View>
-      <TouchableOpacity style={styles.navHeader} onPress={this.onBackButtonPressed}>
-        <Image source={require('../images/icon-arrow-left.png')} style={styles.backButton} />
-      </TouchableOpacity>
-      <View style={styles.searchControl}>
-        <View style={styles.searchControldecoration}>
-          <View style={styles.circle}></View>
-          <View style={styles.line}></View>
-          <View style={styles.square2}></View>
-        </View>
-        <View style={styles.searchControlInputs}>
-          <View style={styles.searchFrom}>
-            <TextInput value='Work' style={styles.textInputFrom}>
-            </TextInput>
-          </View>
-          <View style={styles.searchTo}>
-            <TextInput placeholder={placeholder} style={styles.textInputTo} onFocus={this.onFocus}>
-            </TextInput>
-          </View>
-        </View>
-      </View>
-    </Animatable.View>);
   }
 }
 
