@@ -8,17 +8,33 @@ import {
   TouchableOpacity,
   Text,
   Image,
+  Keyboard,
 } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 export default class LocationSearchHeader extends Component {
   firstState = true;
+  transitionDuration = 500;
+  handleSearchOneRef = ref => this.searchOneRef = ref;
+  handleSearchTwoRef = ref => this.searchtwoRef = ref;
 
   componentWillMount() {
     this.firstState = true;
   }
 
   onFocus = () => {
+    console.log('Component touched');
+    
     this.firstState = false;
+    this.searchOneRef.transitionTo({
+      opacity: 0,
+      zIndex: 1,
+      height: 150,
+      top: 0,
+      left: 0,
+      right: 0,
+    }, this.transitionDuration)
+    this.searchtwoRef.transitionTo({ opacity: 1, zIndex: 2, }, this.transitionDuration)
+    this.refs.secondWhereInput.focus(); 
     this.setState({
       firstState: false,
     })
@@ -26,27 +42,75 @@ export default class LocationSearchHeader extends Component {
 
   onBackButtonPressed = () => {
     this.firstState = true;
+    this.searchOneRef.transitionTo({
+      opacity: 1,
+      zIndex: 2,
+      height: 50,
+      top: 120,
+      left: 20,
+      right: 20,
+    }, this.transitionDuration)
+    this.searchtwoRef.transitionTo({ opacity: 0, zIndex: 1 }, this.transitionDuration)
+    Keyboard.dismiss();
     this.setState({
       firstState: true,
     })
   }
 
   render() {
-    return this.firstState ? this.renderFirstState() : this.renderSecondState();
+    // return this.firstState ? this.renderFirstState() : this.renderSecondState();
+    const { placeholder } = this.props;
+    return (
+      <View>
+        <TouchableWithoutFeedback onPress={this.onFocus}>
+          <Animatable.View ref={this.handleSearchOneRef} style={styles.searchBarFirst}>
+          <View style={styles.square}></View>
+            <Text style={styles.textWhereTo}>
+              {placeholder}    
+          </Text>
+          </Animatable.View>
+        </TouchableWithoutFeedback>
+        <Animatable.View style={styles.searchBarSecond} ref={this.handleSearchTwoRef}>
+        <View style={styles.header}>
+        </View>
+        <TouchableOpacity style={styles.navHeader} onPress={this.onBackButtonPressed}>
+          <Image source={require('../images/icon-arrow-left.png')} style={styles.backButton} />
+        </TouchableOpacity>
+        <View style={styles.searchControl}>
+          <View style={styles.searchControldecoration}>
+            <View style={styles.circle}></View>
+            <View style={styles.line}></View>
+            <View style={styles.square2}></View>
+          </View>
+          <View style={styles.searchControlInputs}>
+            <View style={styles.searchFrom}>
+              <TextInput value='Work' style={styles.textInputFrom}>
+              </TextInput>
+            </View>
+            <View style={styles.searchTo}>
+                <TextInput ref='secondWhereInput' placeholder={placeholder} style={styles.textInputTo}>
+              </TextInput>
+            </View>
+          </View>
+        </View>
+        </Animatable.View>
+      </View>  
+    );
   }
   
   renderFirstState = () => {
     const { placeholder } = this.props;
-    return ( <TouchableOpacity style={styles.searchBarFirst}>
+    return (<Animatable.View style={styles.searchBarFirst} transition="opacity">
       <View style={styles.square}></View>
       <TextInput placeholder={placeholder} style={styles.textInput} onFocus={this.onFocus}>
       </TextInput>
-    </TouchableOpacity> );
+    </Animatable.View>);
   }
 
   renderSecondState = () => {
     const { placeholder } = this.props;
-    return (<TouchableOpacity style={styles.searchBarSecond}>
+    return (
+      <Animatable.View style={styles.searchBarSecond} transition="opacity">
       <View style={styles.header}>
       </View>
       <TouchableOpacity style={styles.navHeader} onPress={this.onBackButtonPressed}>
@@ -60,7 +124,7 @@ export default class LocationSearchHeader extends Component {
         </View>
         <View style={styles.searchControlInputs}>
           <View style={styles.searchFrom}>
-            <TextInput placeholder='Work' style={styles.textInputFrom}>
+            <TextInput value='Work' style={styles.textInputFrom}>
             </TextInput>
           </View>
           <View style={styles.searchTo}>
@@ -69,7 +133,7 @@ export default class LocationSearchHeader extends Component {
           </View>
         </View>
       </View>
-    </TouchableOpacity>);
+    </Animatable.View>);
   }
 }
 
@@ -91,31 +155,36 @@ const styles = StyleSheet.create({
   searchBarFirst: {
     position: 'absolute',
     height: 50,
+    top: 120,
     backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'flex-start',
-    top: 120,
     left: 20,
     right: 20,
     alignSelf: 'stretch',
+    opacity: 1,
+    zIndex: 2,
   },
   searchBarSecond: {
     position: 'absolute',
     left: 0,
     right: 0,
-    height: 200,
+    height: 150,
     backgroundColor: 'white',
     flexDirection: 'column',
     alignItems: 'flex-start',
     paddingLeft: 20,
+    paddingBottom: 5,
     alignSelf: 'stretch',
+    opacity: 0,
+    zIndex: 1,
   },
   searchFrom: {
     flex: 1,
     alignSelf: 'stretch',
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginRight: 30,
+    marginRight: 25,
   },
   searchTo: {
     backgroundColor: 'white',
@@ -123,7 +192,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginRight: 30,
+    marginRight: 25,
   },
   header: {
     flex: 0.5,
@@ -136,20 +205,23 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
   },
-  textInput: {
+  textWhereTo: {
     flex: 1,
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'gray',
   },
   textInputTo: {
-    flex: 1,
+    flex: 0.8,
     backgroundColor: 'lightgray',
-    padding: 10,
-    margin: 10,
+    padding: 8,
+    margin: 8,
   },
   textInputFrom: {
-    flex: 1,
+    flex: 0.8,
     backgroundColor: 'whitesmoke',
-    padding: 10,
-    margin: 10,
+    padding: 8,
+    margin: 8,
   },
   square2: {
     flex: 0,
@@ -171,7 +243,7 @@ const styles = StyleSheet.create({
     flex: 0,
     alignSelf: 'center',
     width: 2,
-    height: 50,
+    height: 35,
     backgroundColor: 'gray',
     margin: 0,
   },
