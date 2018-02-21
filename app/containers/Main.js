@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { StyleSheet, View, Image, Text } from 'react-native'
 import { connect } from 'react-redux'
+import Reactotron from 'reactotron-react-native'
 
 import {
   LocationButtonGroup,
@@ -12,7 +13,7 @@ import {
 
 const mapStateToProps = (state) => ({
   recentLocations: state.main.recentLocations,
-  shortcutLocations: state.recentLocations.slice(0, 3),
+  shortcutLocations: state.main.recentLocations.slice(0, 3),
 })
 
 class Main extends Component {
@@ -21,15 +22,25 @@ class Main extends Component {
     const {recentLocations, shortcutLocations} = this.props
 
     return (
-      <View>
-        <Text style={{ 'marginTop': 40 }}> App Started </Text>
+      <View style={styles.mainContainer}>
+        <View style={styles.searchHeader}>
+          <LocationSearchHeader placeholder='Where to?' ></LocationSearchHeader>
+        </View>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-
+  mainContainer: {
+    backgroundColor: 'gray',
+    opacity: 1,
+    alignSelf: 'stretch',
+    flex: 1,
+  },
+  searchHeader: {
+    flex: 1,
+  }
 })
 
-export default connect(mapStateToProps)(Main)
+export default (Reactotron.overlay(connect(mapStateToProps)(Main)));
