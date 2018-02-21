@@ -11,11 +11,10 @@ import {
 } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 export default class LocationSearchHeader extends Component {
-  firstState = false;
+  firstState = true;
 
-  componentWillMount()
-  {
-    this.firstState = false;
+  componentWillMount() {
+    this.firstState = true;
   }
 
   onFocus = () => {
@@ -25,15 +24,34 @@ export default class LocationSearchHeader extends Component {
     })
   }
 
+  onBackButtonPressed = () => {
+    this.firstState = true;
+    this.setState({
+      firstState: true,
+    })
+  }
+
   render() {
-    //return this.firstState ? this.renderFirstState() : this.renderSecondState();
+    return this.firstState ? this.renderFirstState() : this.renderSecondState();
+  }
+  
+  renderFirstState = () => {
+    const { placeholder } = this.props;
+    return ( <TouchableOpacity style={styles.searchBarFirst}>
+      <View style={styles.square}></View>
+      <TextInput placeholder={placeholder} style={styles.textInput} onFocus={this.onFocus}>
+      </TextInput>
+    </TouchableOpacity> );
+  }
+
+  renderSecondState = () => {
     const { placeholder } = this.props;
     return (<TouchableOpacity style={styles.searchBarSecond}>
       <View style={styles.header}>
       </View>
-      <View style={styles.navHeader}>
-        <Image source={require('../images/icon-arrow-left.png')} style={styles.backButton}/>
-      </View>
+      <TouchableOpacity style={styles.navHeader} onPress={this.onBackButtonPressed}>
+        <Image source={require('../images/icon-arrow-left.png')} style={styles.backButton} />
+      </TouchableOpacity>
       <View style={styles.searchControl}>
         <View style={styles.searchControldecoration}>
           <View style={styles.circle}></View>
@@ -51,24 +69,6 @@ export default class LocationSearchHeader extends Component {
           </View>
         </View>
       </View>
-    </TouchableOpacity>);
-    }
-  
-  renderFirstState = () => {
-    const { placeholder } = this.props;
-    return ( <TouchableOpacity style={styles.searchBarFirst}>
-      <View style={styles.square}></View>
-      <TextInput placeholder={placeholder} style={styles.textInput} onFocus={this.onFocus}>
-      </TextInput>
-    </TouchableOpacity> );
-  }
-
-  renderSecondState = () => {
-    const { placeholder } = this.props;
-    return (<TouchableOpacity style={styles.searchBarSecond}>
-      <View style={styles.square2}></View>
-      <TextInput placeholder={placeholder} style={styles.textInput} onFocus={this.onFocus}>
-      </TextInput>
     </TouchableOpacity>);
   }
 }
