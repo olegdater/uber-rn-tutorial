@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { StyleSheet, View, Image } from 'react-native'
+import { StyleSheet, View, Image, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 import {
@@ -22,7 +22,7 @@ class Main extends Component {
 
     return (
       <View>
-
+        <Text style={{ 'marginTop': 40 }}> App Started </Text>
       </View>
     )
   }
