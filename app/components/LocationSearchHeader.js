@@ -6,25 +6,27 @@ import {
   TouchableWithoutFeedback,
   TextInput,
   TouchableOpacity,
+  TouchableHighlight,
   Text,
   Image,
   Keyboard,
 } from 'react-native'
 import * as Animatable from 'react-native-animatable'
+
 export default class LocationSearchHeader extends Component {
+
   firstState = true;
   transitionDuration = 500;
-  handleSearchOneRef = ref => this.searchOneRef = ref;
+  handleSearchOneRef = (searchOneRef) => this.searchOneRef = searchOneRef;
   handleSearchTwoRef = ref => this.searchtwoRef = ref;
 
   componentWillMount() {
     this.firstState = true;
   }
 
-  onFocus = async () => {
-    console.log('Component touched');
-    
+  onFirstWherePressed = async () => {
     this.firstState = false;
+    
     this.searchOneRef.transitionTo({
       opacity: 0,
       zIndex: 1,
@@ -33,10 +35,12 @@ export default class LocationSearchHeader extends Component {
       left: 0,
       right: 0,
     }, this.transitionDuration)
+
     this.searchtwoRef.transitionTo({ opacity: 1, zIndex: 2, }, this.transitionDuration)
     setTimeout(() => {
       this.refs.secondWhereInput.focus();
     }, this.transitionDuration);
+
     this.setState({
       firstState: false,
     })
@@ -63,14 +67,14 @@ export default class LocationSearchHeader extends Component {
     const { placeholder } = this.props;
     return (
       <View>
-        <TouchableWithoutFeedback onPress={this.onFocus}>
-          <Animatable.View ref={this.handleSearchOneRef} style={styles.searchBarFirst}>
-          <View style={styles.square}></View>
-            <Text style={styles.textWhereTo}>
-              {placeholder}    
-          </Text>
-          </Animatable.View>
-        </TouchableWithoutFeedback>
+        <Animatable.View ref={this.handleSearchOneRef} style={styles.searchBarFirst}>
+          <TouchableOpacity style={styles.touchZone} onPress={this.onFirstWherePressed}>
+            <View style={styles.square}></View>
+              <Text style={styles.textWhereTo}>
+                {placeholder}    
+            </Text>
+          </TouchableOpacity>
+        </Animatable.View>
         <Animatable.View style={styles.searchBarSecond} ref={this.handleSearchTwoRef}>
         <View style={styles.header}>
         </View>
@@ -128,6 +132,9 @@ const styles = StyleSheet.create({
     opacity: 1,
     zIndex: 2,
   },
+  searchBarFirstView: {
+    flex: 1,
+  },
   searchBarSecond: {
     position: 'absolute',
     left: 0,
@@ -161,7 +168,9 @@ const styles = StyleSheet.create({
     flex: 0.5,
   },
   navHeader: {
-    flex: 0.3,
+    width: 25,
+    height: 25,
+    flex: 0.5,
   },
   backButton: {
     opacity: 0.3,
@@ -218,5 +227,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
     borderRadius: 5,
     margin: 5,
+  },
+  touchZone: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    alignSelf: 'stretch',
   }
 })
