@@ -16,7 +16,8 @@ import * as Animatable from 'react-native-animatable'
 export default class LocationSearchHeader extends Component {
 
   firstState = true;
-  transitionDuration = 500;
+  transitionInDuration = 500;
+  transitionOutDuration = 200;
   handleSearchOneRef = (searchOneRef) => this.searchOneRef = searchOneRef;
   handleSearchTwoRef = ref => this.searchtwoRef = ref;
 
@@ -28,18 +29,20 @@ export default class LocationSearchHeader extends Component {
     this.firstState = false;
     
     this.searchOneRef.transitionTo({
-      opacity: 0,
+      opacity: 0.5,
       zIndex: 1,
-      height: 150,
-      top: 0,
       left: 0,
       right: 0,
-    }, this.transitionDuration)
+      paddingLeft: 15,
+    }, this.transitionInDuration)
 
-    this.searchtwoRef.transitionTo({ opacity: 1, zIndex: 2, }, this.transitionDuration)
+    this.searchtwoRef.transitionTo({
+      opacity: 0.5,
+      zIndex: 2,
+    }, this.transitionInDuration)
     setTimeout(() => {
       this.refs.secondWhereInput.focus();
-    }, this.transitionDuration);
+    }, this.transitionInDuration);
 
     this.setState({
       firstState: false,
@@ -52,11 +55,11 @@ export default class LocationSearchHeader extends Component {
       opacity: 1,
       zIndex: 2,
       height: 50,
-      top: 120,
+      top: 100,
       left: 20,
       right: 20,
-    }, this.transitionDuration)
-    this.searchtwoRef.transitionTo({ opacity: 0, zIndex: 1 }, this.transitionDuration)
+    }, this.transitionOutDuration)
+    this.searchtwoRef.transitionTo({ opacity: 0, zIndex: 1 }, this.transitionOutDuration)
     Keyboard.dismiss();
     this.setState({
       firstState: true,
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
   searchBarFirst: {
     position: 'absolute',
     height: 50,
-    top: 120,
+    top: 100,
     backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -131,6 +134,8 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     opacity: 1,
     zIndex: 2,
+    borderWidth: 1,
+    borderColor: 1
   },
   searchBarFirstView: {
     flex: 1,
