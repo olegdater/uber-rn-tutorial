@@ -15,7 +15,6 @@ import * as Animatable from 'react-native-animatable'
 
 export default class LocationSearchHeader extends Component {
 
-  firstState = true;
   transitionInDuration = 500;
   transitionOutDuration = 200;
   handleSearchOneRef = (searchOneRef) => this.searchOneRef = searchOneRef;
@@ -26,7 +25,6 @@ export default class LocationSearchHeader extends Component {
   }
 
   onFirstWherePressed = async () => {
-    this.firstState = false;
     
     this.searchOneRef.transitionTo({
       opacity: 0,
@@ -34,8 +32,8 @@ export default class LocationSearchHeader extends Component {
       left: 0,
       right: 0,
       paddingLeft: 15,
-      height: 150,
       top: 0,
+      height: 150,
     }, this.transitionInDuration)
     this.whereOneRef.transitionTo({
       opacity: 0,
@@ -55,21 +53,21 @@ export default class LocationSearchHeader extends Component {
   }
 
   onBackButtonPressed = () => {
-    this.firstState = true;
     this.searchOneRef.transitionTo({
       opacity: 1,
       zIndex: 2,
-      height: 50,
       top: 100,
+      height: 50,
       left: 20,
       right: 20,
+      paddingLeft: 0,
     }, this.transitionOutDuration)
     this.searchtwoRef.transitionTo({
       opacity: 0, zIndex: 1
     }, this.transitionOutDuration)
     this.whereOneRef.transitionTo({
       opacity: 1,
-    }, this.transitionInDuration)
+    }, this.transitionOutDuration)
     Keyboard.dismiss();
     this.setState({
       firstState: true,
@@ -144,8 +142,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     opacity: 1,
     zIndex: 2,
-    borderWidth: 1,
-    borderColor: 1
   },
   searchBarFirstView: {
     flex: 1,
@@ -186,6 +182,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     flex: 0.5,
+    // borderWidth: 3,
   },
   backButton: {
     opacity: 0.3,
