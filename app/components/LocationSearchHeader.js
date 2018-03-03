@@ -20,7 +20,7 @@ export default class LocationSearchHeader extends Component {
   transitionOutDuration = 200;
   handleSearchOneRef = (searchOneRef) => this.searchOneRef = searchOneRef;
   handleSearchTwoRef = ref => this.searchtwoRef = ref;
-
+  handleWhereOneRef = ref => this.whereOneRef = ref;
   componentWillMount() {
     this.firstState = true;
   }
@@ -29,15 +29,20 @@ export default class LocationSearchHeader extends Component {
     this.firstState = false;
     
     this.searchOneRef.transitionTo({
-      opacity: 0.5,
+      opacity: 0,
       zIndex: 1,
       left: 0,
       right: 0,
       paddingLeft: 15,
+      height: 150,
+      top: 0,
+    }, this.transitionInDuration)
+    this.whereOneRef.transitionTo({
+      opacity: 0,
     }, this.transitionInDuration)
 
     this.searchtwoRef.transitionTo({
-      opacity: 0.5,
+      opacity: 1,
       zIndex: 2,
     }, this.transitionInDuration)
     setTimeout(() => {
@@ -59,7 +64,12 @@ export default class LocationSearchHeader extends Component {
       left: 20,
       right: 20,
     }, this.transitionOutDuration)
-    this.searchtwoRef.transitionTo({ opacity: 0, zIndex: 1 }, this.transitionOutDuration)
+    this.searchtwoRef.transitionTo({
+      opacity: 0, zIndex: 1
+    }, this.transitionOutDuration)
+    this.whereOneRef.transitionTo({
+      opacity: 1,
+    }, this.transitionInDuration)
     Keyboard.dismiss();
     this.setState({
       firstState: true,
@@ -73,9 +83,9 @@ export default class LocationSearchHeader extends Component {
         <Animatable.View ref={this.handleSearchOneRef} style={styles.searchBarFirst}>
           <TouchableOpacity style={styles.touchZone} onPress={this.onFirstWherePressed}>
             <View style={styles.square}></View>
-              <Text style={styles.textWhereTo}>
+            <Animatable.Text ref={this.handleWhereOneRef} style={styles.textWhereTo}>
                 {placeholder}    
-            </Text>
+            </Animatable.Text>
           </TouchableOpacity>
         </Animatable.View>
         <Animatable.View style={styles.searchBarSecond} ref={this.handleSearchTwoRef}>
@@ -128,7 +138,7 @@ const styles = StyleSheet.create({
     top: 100,
     backgroundColor: 'white',
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'flex-end',
     left: 20,
     right: 20,
     alignSelf: 'stretch',
@@ -215,6 +225,7 @@ const styles = StyleSheet.create({
     height: 10,
     backgroundColor: 'black',
     margin: 10,
+    marginTop: 10,
   },
   line: {
     flex: 0,
@@ -236,7 +247,8 @@ const styles = StyleSheet.create({
   touchZone: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    alignSelf: 'stretch',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    marginBottom: 10,
   }
 })
