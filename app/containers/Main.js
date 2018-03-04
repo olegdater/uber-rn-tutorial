@@ -26,6 +26,8 @@ class Main extends Component {
         <View style={styles.searchHeader}>
           <LocationSearchHeader placeholder='Where to?' ></LocationSearchHeader>
         </View>
+        <LocationSearchResults recentLocations={recentLocations}>
+        </LocationSearchResults>
       </View>
     )
   }
