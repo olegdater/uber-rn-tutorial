@@ -10,7 +10,7 @@ export default class SearchResultsList extends Component {
     const dataSource = ds.cloneWithRows(recentLocations);
     
     return (
-      <ListView
+      <ListView style={styles.listView}
         dataSource={dataSource}
         renderRow={(rowData) => <SearchResultsRow rowData={rowData}></SearchResultsRow>}
       />
@@ -19,5 +19,8 @@ export default class SearchResultsList extends Component {
 }
 
 const styles = StyleSheet.create({
-
+  listView: {
+    backgroundColor: 'white',
+    top: 0,
+  }
 })

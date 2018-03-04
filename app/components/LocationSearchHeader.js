@@ -12,20 +12,32 @@ import {
   Keyboard,
 } from 'react-native'
 import * as Animatable from 'react-native-animatable'
+import { connect } from 'react-redux'
+import { mainActionCreators } from '../redux'
 
-export default class LocationSearchHeader extends Component {
+const mapStateToProps = (state) => ({
+  //fetch relevent redux state and pass into props here
+  animateForward: state.main.animateForward,
+  animateBack: state.main.animateBack,
+})
+
+class LocationSearchHeader extends Component {
 
   transitionInDuration = 500;
   transitionOutDuration = 200;
   handleSearchOneRef = (searchOneRef) => this.searchOneRef = searchOneRef;
   handleSearchTwoRef = ref => this.searchtwoRef = ref;
   handleWhereOneRef = ref => this.whereOneRef = ref;
-  componentWillMount() {
-    this.firstState = true;
-  }
 
   onFirstWherePressed = async () => {
-    
+    this.props.dispatch(mainActionCreators.animateForward());
+  }
+
+  onBackButtonPressed = () => {
+    this.props.dispatch(mainActionCreators.animateBack());
+  }
+
+  animateForward = () => {
     this.searchOneRef.transitionTo({
       opacity: 0,
       zIndex: 1,
@@ -46,13 +58,9 @@ export default class LocationSearchHeader extends Component {
     setTimeout(() => {
       this.refs.secondWhereInput.focus();
     }, this.transitionInDuration);
-
-    this.setState({
-      firstState: false,
-    })
   }
 
-  onBackButtonPressed = () => {
+  animateBack = () => {
     this.searchOneRef.transitionTo({
       opacity: 1,
       zIndex: 2,
@@ -72,6 +80,14 @@ export default class LocationSearchHeader extends Component {
     this.setState({
       firstState: true,
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.animateForward) {
+      this.animateForward();
+    } else if (nextProps.animateBack) {
+      this.animateBack();
+    }
   }
 
   render() {
@@ -249,3 +265,5 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   }
 })
+
+export default connect(mapStateToProps)(LocationSearchHeader)

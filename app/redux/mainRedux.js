@@ -1,8 +1,20 @@
 
 const types = {
+  ANIMATE_FORWARD: 'ANIMATE_FORWARD',
+  ANIMATE_BACK: 'ANIMATE_BACK',
 }
 
 export const actionCreators = {
+  animateForward: () => {
+    return {
+      type: types.ANIMATE_FORWARD
+    }
+  },
+  animateBack: () => {
+    return {
+      type: types.ANIMATE_BACK,
+    }
+  }
 }
 
 
@@ -20,8 +32,22 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
   const {type, payload} = action
-
   switch (type) {
+    
+    case types.ANIMATE_FORWARD: {
+      return {
+        ...state,
+        animateForward: true,
+        animateBack: false,
+      }
+    }
+    case types.ANIMATE_BACK: {
+      return {
+        ...state,
+        animateForward: false,
+        animateBack: true,
+      }
+    }
     default: {
       return state
     }

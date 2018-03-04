@@ -14,6 +14,7 @@ import {
 const mapStateToProps = (state) => ({
   recentLocations: state.main.recentLocations,
   shortcutLocations: state.main.recentLocations.slice(0, 3),
+  animationState: state.main.animationState
 })
 
 class Main extends Component {
@@ -26,8 +27,8 @@ class Main extends Component {
         <View style={styles.searchHeader}>
           <LocationSearchHeader placeholder='Where to?' ></LocationSearchHeader>
         </View>
-        <LocationSearchResults recentLocations={recentLocations}>
-        </LocationSearchResults>
+          <LocationSearchResults recentLocations={recentLocations}>
+          </LocationSearchResults>
       </View>
     )
   }
@@ -41,8 +42,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchHeader: {
-    flex: 1,
-  }
+    top: 0,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+  },
 })
 
 export default (Reactotron.overlay(connect(mapStateToProps)(Main)));
