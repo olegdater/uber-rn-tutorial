@@ -22,5 +22,6 @@ const styles = StyleSheet.create({
   listView: {
     backgroundColor: 'white',
     top: 0,
+    opacity: 1,
   }
 })

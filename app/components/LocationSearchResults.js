@@ -12,21 +12,19 @@ const mapStateToProps = (state) => ({
 })
 
 class LocationSearchHeader extends Component {
-  transitionDuration = 500;
+  transitionInDuration = 500;
+  transitionOutDuration = 700;
   handleSearchResults = (searchResults) => this.searchResults = searchResults;
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.animateForward) {
-      console.log('Animate list forward');
-      
       this.searchResults.transitionTo({
         top: 150,
       }, this.transitionDuration)
     } else if (nextProps.animateBack) {
-      console.log('Animate list backward');
       this.searchResults.transitionTo({
         top: 700,
-      }, this.transitionDuration)
+      }, this.transitionOutDuration)
     }
   }
 
@@ -49,6 +47,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 700,
     bottom: 0,
+    zIndex: 1,
   }
 })
 

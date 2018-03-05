@@ -53,7 +53,7 @@ class LocationSearchHeader extends Component {
 
     this.searchtwoRef.transitionTo({
       opacity: 1,
-      zIndex: 2,
+      zIndex: 3,
     }, this.transitionInDuration)
     setTimeout(() => {
       this.refs.secondWhereInput.focus();
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     right: 20,
     alignSelf: 'stretch',
     opacity: 1,
-    zIndex: 2,
+    zIndex: 4,
   },
   searchBarFirstView: {
     flex: 1,
@@ -174,7 +174,11 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     alignSelf: 'stretch',
     opacity: 0,
-    zIndex: 1,
+    shadowColor: 'gray',
+    shadowOpacity: 1,
+    shadowRadius: 5,
+    shadowOffset: { width: 2, height: 2 },
+    zIndex: 3,
   },
   searchFrom: {
     flex: 1,
@@ -201,7 +205,7 @@ const styles = StyleSheet.create({
     // borderWidth: 3,
   },
   backButton: {
-    opacity: 0.3,
+    opacity: 0.5,
     width: 25,
     height: 25,
   },
