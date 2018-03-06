@@ -36,9 +36,6 @@ export default class UberMapView extends Component {
     navigator.geolocation.clearWatch(this.watchId);
   }
 
-  onRegionChange = (region) => {
-    this.setState({ region });
-  }
 
   render() {
     return (
@@ -49,7 +46,6 @@ export default class UberMapView extends Component {
           latitudeDelta: 0.00922,
           longitudeDelta: 0.00421,
         }}
-        onRegionChange={this.onRegionChange}
       >
         <MapView.Circle
           style={styles.circleBig}  
