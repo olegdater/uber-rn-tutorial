@@ -158,6 +158,10 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     opacity: 1,
     zIndex: 4,
+    shadowColor: 'gray',
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 0 },
   },
   searchBarFirstView: {
     flex: 1,
