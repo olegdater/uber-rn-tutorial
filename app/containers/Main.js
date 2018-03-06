@@ -3,6 +3,8 @@ import { StyleSheet, View, Image, Text } from 'react-native'
 import { connect } from 'react-redux'
 import Reactotron from 'reactotron-react-native'
 
+import MapView from 'react-native-maps';
+
 import {
   LocationButtonGroup,
   LocationSearchHeader,

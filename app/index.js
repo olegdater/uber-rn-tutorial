@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import { StyleSheet, View, Image, Text } from 'react-native'
 import { Provider } from 'react-redux'
 import configureStore from './store/configureStore'
 import Router from './containers/Router'
 
 const store = configureStore()
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
@@ -14,6 +15,3 @@ class App extends Component {
     )
   }
 }
-
-export default App;
-
