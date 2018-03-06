@@ -20,7 +20,7 @@ class LocationSearchHeader extends Component {
     if (nextProps.animateForward) {
       this.searchResults.transitionTo({
         top: 150,
-      }, this.transitionDuration)
+      }, this.transitionInDuration)
     } else if (nextProps.animateBack) {
       this.searchResults.transitionTo({
         top: 700,
