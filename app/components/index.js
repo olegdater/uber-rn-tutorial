@@ -5,6 +5,7 @@ import SearchResultsRow from './SearchResultsRow'
 import NavigationIcon from './NavigationIcon'
 import LocationButtonGroup from './LocationButtonGroup'
 import LocationButton from './LocationButton'
+import UberMapView from "./UberMapView";
 
 export {
   LocationButton,
@@ -14,4 +15,5 @@ export {
   SearchResultsList,
   LocationSearchResults,
   LocationSearchHeader,
+  UberMapView,
 }

@@ -3,7 +3,6 @@ import { StyleSheet, View, Image, Text } from 'react-native'
 import { connect } from 'react-redux'
 import Reactotron from 'reactotron-react-native'
 
-import MapView from 'react-native-maps';
 
 import {
   LocationButtonGroup,
@@ -11,6 +10,7 @@ import {
   LocationSearchResults,
   SearchResultsList,
   NavigationIcon,
+  UberMapView,
 } from '../components'
 
 const mapStateToProps = (state) => ({
@@ -26,6 +26,7 @@ class Main extends Component {
 
     return (
       <View style={styles.mainContainer}>
+        <UberMapView />
         <View style={styles.searchHeader}>
           <LocationSearchHeader placeholder='Where to?' ></LocationSearchHeader>
         </View>
