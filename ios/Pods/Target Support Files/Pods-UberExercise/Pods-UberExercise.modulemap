@@ -1,0 +1,6 @@
+framework module Pods_UberExercise {
+  umbrella header "Pods-UberExercise-umbrella.h"
+
+  export *
+  module * { export * }
+}
