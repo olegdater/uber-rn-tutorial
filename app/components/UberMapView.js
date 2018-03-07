@@ -54,9 +54,9 @@ export default class UberMapView extends Component {
             latitude: this.state.latitude,
             longitude: this.state.longitude,
           }}
-          radius={50}
+          radius={30}
           strokeColor={'#b0e0e6'}
-          fillColor={'rgba(240,248,255,0.5)'}
+          fillColor={'rgba(30,144,255,0.2)'}
         />
         <MapView.Circle
           key={'coord' + this.state.latitude}
@@ -64,7 +64,7 @@ export default class UberMapView extends Component {
             latitude: this.state.latitude,
             longitude: this.state.longitude,
           }}
-          radius={10}
+          radius={7}
           strokeColor={'gray'}
           fillColor={'#00bfff'}
         />
